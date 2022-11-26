@@ -1,0 +1,38 @@
+var testRoute = require('./routes/myTestRoute');
+// The route is now bound to the app (see app.use (testroute) line),
+// /mytest in app.use is a prefix, you
+// can change it as you like. If you want
+// to call those routes, you now need to
+// call
+// localhost:3000/mytest/test or
+// localhost:3000/mytest/test2
+
+
+const express = require('express') //require the express package
+const app = express() //create an app using the express package
+const port = 5000 // set the port to 3000
+const port1 = 6000 // This creates another web server port at port 4000. You can test the second port is working by modifying the Node JS link you pasted in Postman (i.e. http://localhost:4000)
+var calculatorRoute = require('./routes/calcTestRoute');
+
+//You can call the app.get functions by using the Postman link from line 4, and setting the method to 'GET' in Postman, then adding nothing to call the hello world function, or /test to call the
+// test function
+
+app.listen(port, () => {
+console.log(`Example applistening at http://localhost:${port}`)})
+
+app.listen(port1, () => {
+    console.log(`Example applistening at http://localhost:${port1}`)})
+
+app.get('/abc', (req, res) => { //Next, create an app using the express() function, which is a constructor or initiator function.
+res.send('Hi World!')})   
+
+app.get('/test', (req, res) => { //App.get is a binding for an endpoint.This reads as “bind a get endpoint to the object app using the / URL (root), when called call this function passing two arguments, req and res, the
+//function contains a call to res.send which will send the message in the brackets to the requestor ”
+    res.send('This is a test')})
+
+app.use('/', express.static('public'))
+app.use('/mytest', testRoute);
+
+// index.js
+
+app.use('/calculator',calculatorRoute)

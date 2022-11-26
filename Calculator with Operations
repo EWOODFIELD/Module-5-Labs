@@ -1,0 +1,86 @@
+//My Front End File:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<form name="form1" >
+    <input type="number" id ="numInput1" name="num1"></input>
+    <input type="number"  id ="numInput2"  name="num2"></input>
+    <input type="button" onclick = "calcFunction()"> submit </input>
+    Result below here
+    <div id = 'result'></div>
+</form>
+<script>
+
+    // let x = document.getElementById('numInput1').value
+    // let y = document.getElementById('numInput2').value
+
+    
+    
+
+    function calcFunction() {
+        let x = +document.form1.num1.value
+        let y = +document.form1.num2.value
+        // e.preventDefault()
+        console.log(x)
+        console.log(y)
+        fetch(`http://localhost:3000/calculator/addfunction?num1=${x}&num2=${y}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            document.getElementById("result").innerHTML = data.result
+        })
+    }
+
+    //calcFunction()
+</script>
+</body>
+</html>
+
+//My Calculator Operations:
+var express = require('express'); //lines 2-3, and 9, needed for any route file you create
+var router = express.Router();
+
+
+router.get('/add', (req, res) => {
+    let number1=parseInt(req.query.num1);
+    let number2=parseInt(req.query.num2);
+    let sum=number1+number2
+    console.log(sum)
+    res.status(200)
+    res.json({result:sum})
+    })
+
+router.get('/subtract', (req, res) => {
+    let number1=parseInt(req.query.num1);
+    let number2=parseInt(req.query.num2);
+    let sum2=number1-number2
+    console.log(sum2)
+    res.status(200)
+    res.json({result:sum2})
+    })
+
+router.get('/multiply', (req, res) => {
+    let number1=parseInt(req.query.num1);
+    let number2=parseInt(req.query.num2);
+    let sum3=number1*number2
+    console.log(sum3)
+    res.status(200)
+    res.json({result:sum3})
+    })
+
+router.get('/divide', (req, res) => {
+    let number1=parseInt(req.query.num1);
+    let number2=parseInt(req.query.num2);
+    let sum4=number1/number2
+    console.log(sum4)
+    res.status(200)
+    res.json({result:sum4})
+    })
+
+module.exports = router;
